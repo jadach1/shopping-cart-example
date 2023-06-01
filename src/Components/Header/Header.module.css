@@ -1,0 +1,22 @@
+.header {
+    background-image: url(../../../public/MainImage.jpg);
+    background-size: cover;
+    height: 500px;
+    justify-content:center;
+    vertical-align: bottom;
+    display: flex;
+}
+
+.description{
+    width: 60%;
+    height: 250px;
+    justify-content: center;
+    flex-direction: column;
+    border-radius: 12px;
+    background: #dceeff;
+    opacity: 0.7;
+    font-weight: bolder;
+    position: relative;
+    top: 100px;
+    align-items: center;
+}

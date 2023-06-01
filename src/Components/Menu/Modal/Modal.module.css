@@ -1,0 +1,13 @@
+.name {
+    font-family: 'Cambria';
+    font-style: oblique;
+    font-size: larger;
+    background-color:honeydew;
+    border-radius: 12px;
+    justify-content: center;
+    padding:1rem;
+}
+
+.alignName {
+    display: flex;
+}

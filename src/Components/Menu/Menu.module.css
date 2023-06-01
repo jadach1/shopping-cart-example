@@ -1,0 +1,30 @@
+.menu {
+    position: relative;
+    top: -100px;
+    /* left: 175px;
+    width: 70%; */
+    border-radius: 12px;
+    background: #bbb;
+    opacity: 0.9;
+}
+
+hr.dashed {
+    border-top: 3px dashed #bbb;
+  }
+
+.alignDisplay {
+    /* flex: 0 0 auto;
+    width: 50%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center; */
+}
+
+.displayItem {
+    padding-left: 50px;
+}
+ .inputHalf {
+    width: 50%;
+ }
+  
