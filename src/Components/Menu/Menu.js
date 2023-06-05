@@ -1,15 +1,16 @@
 
-import { useContext, useEffect, useState } from "react";
+import React, { useEffect, useState} from "react";
 import * as meals from "../../Models/Meal.model";
 import DisplayItems from "./DisplayItems";
 import OrderForm from "./OrderForm";
 import classes from "./Menu.module.css";
 
-const Menu = (props) => {
-  const [Items, setItems] = useState(meals.MEAL.DINNER);
+/*LISTS MENU ITEMS AND CONTENTS */
+const Menu = (props) => {  
+  const [Items, setItems] = useState(meals.MEAL.DINNER); 
 
+  //Will wait to receive new menu set request
   useEffect( () => {
-    console.log("render")
     const meal = props.meal;
     switch(meal){
       case "Breakfast":
@@ -24,13 +25,12 @@ const Menu = (props) => {
       default:
         break;
     }
-    return console.log("exiting use effect in menu")
   },[props.meal])
 
-  console.log("Meal Items re-rendered")
+
   return (
-    <section className="d-flex justify-content-center">
-      <div className={`col-6 ${classes.menu}`}>
+    <section className="d-flex justify-content-center" >
+      <div className={` ${classes.menu}`} >
         {Items.map((item) => {
           return (
             <div className="row mb-4" key={item.id}>

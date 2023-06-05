@@ -10,6 +10,13 @@ const shoppingCartInitialState = {
 
 const ShoppingCartReducer = (state, action) => {
 
+  // If user is sumbitting form we want to exit early before calculating Index
+if(action.type === "SUBMIT"){
+  return shoppingCartInitialState;
+}
+
+// We are using Existing Card and index multiple times 
+// while Adding, updating and deleting so we will define them here
   const existingCart = [...state.shoppingCart];
   const index = existingCart.findIndex((item) => {
     return item.itemID === action.payload.item.itemID;
@@ -25,7 +32,7 @@ const ShoppingCartReducer = (state, action) => {
           itemID: action.payload.item.itemID,
           itemName: action.payload.item.itemName,
           itemQty: action.payload.item.itemQty,
-          total:  +newTotal,
+          total:  +newTotal.toFixed(2),
         },
       ];
 
@@ -136,6 +143,9 @@ const ShoppingCartContextProvider = (props) => {
     dispatchCart({type: "DELETE", payload: {item: item}})
   }
 
+  const submitOrder = () => {
+    dispatchCart({type: "SUBMIT"})
+  }
 
   const shoppingCartContext = {
     items: cartState.shoppingCart,
@@ -144,6 +154,7 @@ const ShoppingCartContextProvider = (props) => {
     addItem: AddItemToShoppingCart,
     updateItem: updateItemToShoppingCart,
     removeItem: removeItemFromShoppingCart,
+    submitOrder: submitOrder,
   };
 
   return (

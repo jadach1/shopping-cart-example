@@ -1,40 +1,52 @@
-import { useState, useContext } from "react";
+import { useState, useContext, useEffect } from "react";
 import MyButton from "../UI/Button/MyButton";
 import Toaster from "../Toaster/Toaster"
 import classes from "../UI/Button/Button.module.css";
 import { ShoppingCartContext } from "../Store/ShoppingCart/ShoppingCardContext";
-import  MessagingContext  from '../Store/Messages/MessagingContext'
+import { FormValidationContext } from "./Context/FormValidationContextProvider";
 
 const OrderForm = (props) => {
   const [qty, setQty] = useState(0); // Sets qty
   const [isValid, setValid] = useState(true);  //Error handling for qty
-
-  // Context provider for the ShoppingCart
-   const cartContext = useContext(ShoppingCartContext);
-  
-  // Context for Messaging
-   const msgContext = useContext(MessagingContext);
+  const [isFormValid, setFromValiditiy] = useState(false)
+  // Context providers
+  const cartContext = useContext(ShoppingCartContext);
+  const formValidContext = useContext(FormValidationContext)
 
   // Error to be displayed if user enters qty of 0
    const qtyError = (
-      <div className="bg-danger text-white font-bold">
-        <h3>Please enter valid Quantity</h3>
-      </div>
+      <>
+        <div className={`bg-danger text-white font-bold 
+                        ${classes.largeScreenError}`}>
+          <h3>Please enter valid Quantity</h3>
+        </div>
+        <div className={`bg-danger text-white font-bold 
+                        ${classes.smallScreenError}`}>
+          <p>Please enter valid Quantity</p>
+        </div>
+      </>
     );
 
   const onChangeInputHandler = (event) => {
     setQty(event.target.value);
-    setValid(true)
   };
 
-  //When user focus' on input remove error message
+  //Will listen if user has clicked outside of Menu Div and reset errors
+  useEffect(() => {
+    setValid(true);
+  } , [formValidContext])
+
+  //When user focus' on input remove error message, 
+  //set form to invalid
   const onFocusHandler = () => {
     setValid(true)
+    setFromValiditiy(false)
   }
 
   // Handles the form when user clicks ADD
   const formHandler = (event) => {
     event.preventDefault();
+    
     // Check to make sure quantity is entered
     if (qty > 0) {
       // Pass desired params
@@ -48,17 +60,22 @@ const OrderForm = (props) => {
        setQty(0);
       // Sets the form to Valid, removes error
        setValid(true);
-      // Send success message
-       msgContext.newMessage({payload: {title: 'SUCCESS', message: 'Return a SUCCESS', icon: 'SUCCESS', colour: 'SUCCESS'}});
+       setFromValiditiy(true);
     } else {
       // Prompts error message
        setValid(false);
+       setFromValiditiy(false);
     }
   };
 
+  //When the Toaster Element is closed will callback this function
+  const onClose = () => {
+    setFromValiditiy(false)
+  }
+
 
   return (
-    <div className={`col-md-6  ${props.classes.alignItem}`}>
+    <div className={`  ${props.classes.alignItem}`} >
       <form onSubmit={formHandler}>
         <label aria-label="Amount"><strong>Amount</strong></label>
         <input
@@ -70,12 +87,13 @@ const OrderForm = (props) => {
           name="qty"
           onFocus={onFocusHandler}
         />
-        {!isValid && qtyError}
-        {!isValid && <Toaster />}
+        {!isValid && <Toaster  closed={onClose} payload={{title: "Problem", message: "You need to enter a valid quantity", type: "red" }}/>}
+        {isFormValid && <Toaster closed={onClose} payload={{title: "Success", message: "Your Cart has been updated!", type: "green" }}/>}
         <div>
           <MyButton type="submit" title="+Add" classes={classes.add} />
         </div>
       </form>
+      {!isValid && qtyError}
     </div>
   );
 };

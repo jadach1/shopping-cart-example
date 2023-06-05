@@ -3,3 +3,27 @@
     color: wheat;
     font-weight: bolder;
 }
+
+@media (max-width: 767px) {
+    /*HIDE THIS ERROR ON SMALL SCREENS*/
+    .largeScreenError {
+        display: none;
+    }
+
+    .smallScreenError {
+        display:block;
+        font-size: smaller;
+    }
+}
+
+@media (min-width: 768px) {
+    /*HIDE THIS ERROR ON SMALL SCREENS*/
+    .largeScreenError {
+        display: block;
+    }
+
+    .smallScreenError {
+        display: none;
+    }
+}
+

@@ -1,11 +1,37 @@
-.menu {
-    position: relative;
-    top: -100px;
-    /* left: 175px;
-    width: 70%; */
-    border-radius: 12px;
-    background: #bbb;
-    opacity: 0.9;
+@media (max-width: 767px) {
+    .menu {
+        position: relative;
+        top: -300px;
+        border-radius: 12px;
+        background: #bbb;
+        opacity: 0.9;
+    }
+    
+    .inputHalf {
+        width: 25%;
+     }
+    
+     form{
+        display: flex;
+        justify-content: center;
+        align-items: baseline;
+     }
+}
+
+@Media (min-width: 768px) {
+    .menu {
+        position: relative;
+        top: -100px;
+        border-radius: 12px;
+        background: #bbb;
+        opacity: 0.9;
+    }
+
+    .inputHalf {
+        width: 50%;
+     }
+
+     form{}
 }
 
 hr.dashed {
@@ -24,7 +50,12 @@ hr.dashed {
 .displayItem {
     padding-left: 50px;
 }
- .inputHalf {
-    width: 50%;
- }
+
+.clickOutsideListener {
+    display: flex;
+    justify-content: center;
+    position: relative;
+    left: 25%;
+}
+ 
   

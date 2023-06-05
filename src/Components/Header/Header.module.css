@@ -1,5 +1,5 @@
-.header {
-    background-image: url(../../../public/MainImage.jpg);
+.Dinner {
+    background-image: url(../../../public/Dinner.jpg);
     background-size: cover;
     height: 500px;
     justify-content:center;
@@ -7,6 +7,27 @@
     display: flex;
 }
 
+.Breakfast {
+    background-image: url(../../../public/Breakfast.jpg);
+    background-size: cover;
+    height: 500px;
+    justify-content:center;
+    vertical-align: bottom;
+    display: flex;
+}
+
+.Dessert {
+    background-image: url(../../../public/Dessert.jpg);
+    background-size: cover;
+    height: 500px;
+    justify-content:center;
+    vertical-align: bottom;
+    display: flex;
+}
+
+@media (min-width: 768px) {
+    
+}
 .description{
     width: 60%;
     height: 250px;
@@ -20,3 +41,27 @@
     top: 100px;
     align-items: center;
 }
+
+.fade {
+    animation: fade 5s;
+  }
+
+  @keyframes fade {
+    0% {
+      opacity:0; 
+      background-color: green;
+    }
+    10% {
+      opacity: .5;
+    }
+    30% {
+      opacity: .7;
+    }
+    50% {
+      opacity: .9;
+    }
+    100% {
+      opacity: 1; 
+      background-color: red;
+    }
+  }

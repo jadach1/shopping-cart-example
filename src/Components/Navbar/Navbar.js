@@ -1,5 +1,6 @@
-import { useContext, useEffect, useState } from "react";
+import React, { useContext } from "react";
 import { ShoppingCartContext } from "../Store/ShoppingCart/ShoppingCardContext";
+import ShoppingCartIcon from "./ShoppingCartIcon/ShoppingCartIcon";
 
 // React-BootStrap Imports
 import Container from "react-bootstrap/Container";
@@ -10,52 +11,23 @@ import Offcanvas from "react-bootstrap/Offcanvas";
 //Styling
 import classes from "./Navbar.module.css";
 
-// React Icons
-import { FaShoppingCart } from "react-icons/fa";
-
 
 const AppNavbar = (props) => {
+
   const cartContext = useContext(ShoppingCartContext);
   const expand = "md"; // This is used for the NavBar responsiveness
 
-  const [itemAdded, setAnimation] = useState(false);  //For animation
-  const bumpClass = ` ${itemAdded ? classes.bump : ''}`;
-  const shoppingCart = (
-    <Nav.Link className="offset-md-4 col-md-2" onClick={props.modalHandler}>
-      <button className={bumpClass}>
-        <span>
-          <FaShoppingCart style={{ color: "red" }} />
-        </span>
-        <span> {cartContext.totalQty} </span>
-      </button>
-    </Nav.Link>
-  );
-
-  // Will make an animation effect on the cart button whenever the quantity is changed
-  useEffect( () => {
-    
-    if(cartContext.totalQty <= 0){
-      return;
-    } 
-
-    setAnimation(true)
-    const timer = setTimeout( () => {setAnimation(false)}, 300);
-    return () => {
-      clearTimeout(timer)
-    }
-  }, [cartContext.totalQty])
-
+//For Debuggin purposes
   const show = () => {
     console.log(cartContext.items);
     console.log(cartContext);
   };
 
   const mealSelectionHandler = (meal) => {
-    console.log(meal)
-    if(meal.target.innerText.trim() !== ""){
-      props.setMeal(meal.target.innerText)
+    if (meal.target.innerText.trim() !== "") {
+      props.setMeal(meal.target.innerText);
     }
-  }
+  };
 
   return (
     <>
@@ -66,16 +38,19 @@ const AppNavbar = (props) => {
       >
         <Container fluid>
           <Navbar.Brand>
-            <strong>Restaurant Demo</strong>
+            <strong>Restaurant Demo <small>Using React</small></strong>
           </Navbar.Brand>
+
           <div className={`d-md-none d-flex ${classes.dragonBreath}`}>
-            { cartContext.totalQty > 0 && shoppingCart}
+            {cartContext.totalQty > 0 && <ShoppingCartIcon modalHandler={props.modalHandler} classes={`${classes.bump}`}/>}
           </div>
-          <Navbar.Toggle aria-controls={`offcanvasNavbar-expand-${expand}`} />
+
+          <Navbar.Toggle style={{borderColor: `black`}} aria-controls={`offcanvasNavbar-expand-${expand}`} />
           <Navbar.Offcanvas
             id={`offcanvasNavbar-expand-${expand}`}
             aria-labelledby={`offcanvasNavbarLabel-expand-${expand}`}
             placement="end"
+            style={{width: `auto`}}
           >
             <Offcanvas.Header closeButton>
               <Offcanvas.Title id={`offcanvasNavbarLabel-expand-${expand}`}>
@@ -86,11 +61,16 @@ const AppNavbar = (props) => {
               <Nav
                 className={`${classes.dragonBreath} justify-content-center d-flex flex-grow-1 pe-3 `}
               >
-                <Nav.Link><button onClick={mealSelectionHandler}>Dinner</button></Nav.Link>
-                <Nav.Link><button onClick={mealSelectionHandler}>Breakfast</button></Nav.Link>
-                <Nav.Link><button onClick={mealSelectionHandler}>Dessert  </button></Nav.Link>
-                { cartContext.totalQty > 0 && shoppingCart}
-                <button onClick={show}>click</button>
+                <Nav.Link>
+                  <button onClick={mealSelectionHandler}>Dinner</button>
+                </Nav.Link>
+                <Nav.Link>
+                  <button onClick={mealSelectionHandler}>Breakfast</button>
+                </Nav.Link>
+                <Nav.Link>
+                  <button onClick={mealSelectionHandler}>Dessert </button>
+                </Nav.Link>
+                {cartContext.totalQty > 0 &&  <ShoppingCartIcon modalHandler={props.modalHandler} classes={`${classes.bump}`}/>}
               </Nav>
             </Offcanvas.Body>
           </Navbar.Offcanvas>
@@ -100,4 +80,4 @@ const AppNavbar = (props) => {
   );
 };
 
-export default AppNavbar;
+export default React.memo(AppNavbar);

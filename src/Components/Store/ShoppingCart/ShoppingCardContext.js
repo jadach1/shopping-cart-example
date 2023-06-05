@@ -13,6 +13,6 @@ export const ShoppingCartContext = React.createContext({
   addItem: () => {},
   updateItem: () => {},
   removeItem: () => {},
-  newItem: () => {},
+  submitOrder: () => {},
 });
 
