@@ -24,7 +24,7 @@ yarn-error.log*
 
 #others
 src/to-do.txt
-./public
+public/
 .firebaserc
 firebase.json
 .firebase
