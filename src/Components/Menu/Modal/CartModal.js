@@ -21,7 +21,8 @@ const CartModal = (props) => {
   }, [cartContext.items, isSubmitted])
 
   const submitHandler = () => {
-    setSubmit(true);
+    if(cartContext.totalPrice > 0)
+      setSubmit(true);
   };
 
   const onClose = () => {
